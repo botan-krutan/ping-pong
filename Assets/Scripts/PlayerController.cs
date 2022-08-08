@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class PlayerController : MonoBehaviour
-{
+{   
     Camera _camera;
     public Color _currentColor;
     [SerializeField] List<Color> colors;
@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
             else colorIndex++;
 
             ChangeColor(colors[colorIndex]);
+            transform.DOShakeScale(0.3f, 0.3f, 9, 60);
         }
         if (Input.GetKeyDown(colorDown))
         {
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour
             else colorIndex--;
 
             ChangeColor(colors[colorIndex]);
+            transform.DOShakeScale(0.3f, 0.3f, 9, 60);
         }
     }
     void ChangeColor(Color changeColor)
@@ -59,7 +61,11 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Ball"))
         {
-            if (collision.gameObject.GetComponent<Ball>()._currentColor == _currentColor) return;
+            if (collision.gameObject.GetComponent<Ball>()._currentColor == _currentColor)
+            {
+                transform.DOShakeScale(0.5f, 0.5f, 9, 60);
+                return;
+            }
             StartCoroutine(DisableCollison(2));
         }
     }

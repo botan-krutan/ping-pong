@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class Ball : MonoBehaviour
 {
     Rigidbody2D _rb;
@@ -9,16 +9,21 @@ public class Ball : MonoBehaviour
 
     public Color _currentColor;
     [SerializeField] List<Color> colors;
-
+    [SerializeField] GameObject explosionParticle;
     // Start is called before the first frame update
     void Start()
     {
-        if (colors.Count > 0) ChangeColor(colors[0]);
         _rb = GetComponent<Rigidbody2D>();
-        startingVelocity = new Vector2(8,4);
-        _rb.velocity = startingVelocity;
+        if (colors.Count > 0) ChangeColor(colors[0]);
     }
 
+    public void Go()
+    {
+        
+        
+        startingVelocity = new Vector2(Mathf.Sign(Random.Range(-2, 2)) * 6, Mathf.Sign(Random.Range(-2, 2)) * 6);
+        _rb.velocity = startingVelocity;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -40,8 +45,13 @@ public class Ball : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {   
+    {
 
-        if (other.gameObject.CompareTag("Respawn")) Destroy(gameObject);
+        if (other.gameObject.CompareTag("Respawn"))
+        {
+            Camera.main.DOShakeRotation(0.7f, 10, 10, 60);
+            Instantiate(explosionParticle, transform.position, Quaternion.identity);  
+            Destroy(gameObject);
+        }
     }
 }
