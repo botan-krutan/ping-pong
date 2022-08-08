@@ -21,7 +21,7 @@ public class Ball : MonoBehaviour
     {
         
         
-        startingVelocity = new Vector2(Mathf.Sign(Random.Range(-2, 2)) * 6, Mathf.Sign(Random.Range(-2, 2)) * 6);
+        startingVelocity = new Vector2(Mathf.Sign(Random.Range(-2, 2)) * 6, Mathf.Sign(Random.Range(-2, 2)) * 3);
         _rb.velocity = startingVelocity;
     }
     // Update is called once per frame
@@ -50,8 +50,12 @@ public class Ball : MonoBehaviour
         if (other.gameObject.CompareTag("Respawn"))
         {
             Camera.main.DOShakeRotation(0.7f, 10, 10, 60);
-            Instantiate(explosionParticle, transform.position, Quaternion.identity);  
+            Instantiate(explosionParticle, transform.position, Quaternion.identity);
+            if (other.gameObject.name == "Wall 1") ScoresRounds.instance.ChangeScore(1);
+            else ScoresRounds.instance.ChangeScore(0);
+            ScoresRounds.instance.ReloadScene();
             Destroy(gameObject);
+            
         }
     }
 }
