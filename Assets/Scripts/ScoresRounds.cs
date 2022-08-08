@@ -8,7 +8,7 @@ public class ScoresRounds : MonoBehaviour
     public static ScoresRounds instance;
     public int numberOfRounds;
     public int[] playerScores = new int[2];
-    TextMeshProUGUI scoreText;
+    TextMeshProUGUI scoreText, roundsText;
     // Start is called before the first frame update
     
     void Start()
@@ -27,14 +27,21 @@ public class ScoresRounds : MonoBehaviour
     {
         scoreText = GameObject.Find("Scores").GetComponent<TextMeshProUGUI>();
         scoreText.text = $"{playerScores[0]}:{playerScores[1]}";
+        roundsText = GameObject.Find("Rounds").GetComponent<TextMeshProUGUI>();
+        roundsText.text = $"Rounds Left: {numberOfRounds}";
     }
-    public void ReloadScene()
+    public void LoadNextScene()
     {
         IEnumerator ReloadAfterSeconds()
         {
             yield return new WaitForSeconds(1.5f);
             SceneManager.LoadScene("Game Scene");
         }
+        if(numberOfRounds == 1)
+        {
+            return;
+        }
+        numberOfRounds--;
         StartCoroutine(ReloadAfterSeconds());
     }
 }

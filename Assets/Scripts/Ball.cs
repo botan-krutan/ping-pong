@@ -53,7 +53,8 @@ public class Ball : MonoBehaviour
             Instantiate(explosionParticle, transform.position, Quaternion.identity);
             if (other.gameObject.name == "Wall 1") ScoresRounds.instance.ChangeScore(1);
             else ScoresRounds.instance.ChangeScore(0);
-            ScoresRounds.instance.ReloadScene();
+            ScoresRounds.instance.LoadNextScene();
+
             Destroy(gameObject);
             
         }

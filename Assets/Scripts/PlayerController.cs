@@ -20,15 +20,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(moveUp))
-        {
+        Movement();
+        Color();
+    }
+    void Movement()
+    {
+        if (Input.GetKey(moveUp) && transform.position.y < 3.5)
+        { 
             //Debug.Log("AEYEYA");
             transform.Translate(movementSpeed * Vector2.up * Time.deltaTime);
         }
-        if (Input.GetKey(moveDown))
+        if (Input.GetKey(moveDown) && transform.position.y > -3.5)
         {
             transform.Translate(movementSpeed * Vector2.down * Time.deltaTime);
         }
+    }
+    void Color()
+    {
         if (Input.GetKeyDown(colorUp))
         {
             if (colorIndex + 1 == colors.Count)
