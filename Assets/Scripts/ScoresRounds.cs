@@ -17,20 +17,7 @@ public class ScoresRounds : MonoBehaviour
         if (instance == null) instance = this;
         if (instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
-        if (SceneManager.GetActiveScene().name == "Results")
-        {
-            if (playerScores[0] > playerScores[1])
-            {
-                FindObjectOfType<Results>().p1wins = 1;
-            }
-            else if (playerScores[1] > playerScores[0])
-            {
-                FindObjectOfType<Results>().p1wins = -1;
-            }
-            else if (playerScores[1] == playerScores[0]) FindObjectOfType<Results>().p1wins = 0;
-            playerScores[0] = 0;
-            playerScores[1] = 0;
-        }
+
     }
     public void ChangeScore(int playerIndex)
     {
@@ -45,8 +32,23 @@ public class ScoresRounds : MonoBehaviour
             scoreText.text = $"{playerScores[0]}:{playerScores[1]}";
             roundsText = GameObject.Find("Rounds").GetComponent<TextMeshProUGUI>();
             roundsText.text = $"Rounds Left: {numberOfRounds}";
+            return;
         }
-
+        if (SceneManager.GetActiveScene().name == "Results")
+        {
+            if (playerScores[0] == 0 && playerScores[1] == 0) return;
+            if (playerScores[0] > playerScores[1])
+            {
+                FindObjectOfType<Results>().p1wins = 1;
+            }
+            else if (playerScores[1] > playerScores[0])
+            {
+                FindObjectOfType<Results>().p1wins = -1;
+            }
+            else if (playerScores[1] == playerScores[0]) FindObjectOfType<Results>().p1wins = 0;
+            playerScores[0] = 0;
+            playerScores[1] = 0;
+        }
 
     }
     public void LoadNextScene()
