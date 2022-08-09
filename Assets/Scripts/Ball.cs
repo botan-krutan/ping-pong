@@ -35,6 +35,7 @@ public class Ball : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0), 0.3f, 9, 0.3f);
         ChangeColor(colors[Random.Range(0, colors.Count)]);
     }
     

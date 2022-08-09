@@ -6,8 +6,9 @@ using TMPro;
 public class StartingAnimation : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(1);
         transform.DOScale(1, 1).OnComplete(() =>
         {
             GetComponent<TextMeshProUGUI>().DOFade(0, 1).OnComplete(() => 
