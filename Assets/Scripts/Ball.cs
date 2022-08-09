@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour
     public Color _currentColor;
     [SerializeField] List<Color> colors;
     [SerializeField] GameObject explosionParticle;
+    [SerializeField] AudioClip hit, crack;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +38,7 @@ public class Ball : MonoBehaviour
     {
         transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0), 0.3f, 9, 0.3f);
         ChangeColor(colors[Random.Range(0, colors.Count)]);
+        AudioPlayer.Instance.PlayAudio(hit);
     }
     
     void ChangeColor(Color changeColor)
@@ -55,7 +57,7 @@ public class Ball : MonoBehaviour
             if (other.gameObject.name == "Wall 1") ScoresRounds.instance.ChangeScore(1);
             else ScoresRounds.instance.ChangeScore(0);
             ScoresRounds.instance.LoadNextScene();
-
+            AudioPlayer.Instance.PlayAudio(crack);
             Destroy(gameObject);
             
         }

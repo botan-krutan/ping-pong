@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     int colorIndex;
     [SerializeField] KeyCode moveUp, moveDown, colorUp, colorDown;
     [SerializeField] float movementSpeed;
+    [SerializeField] AudioClip sw;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
             ChangeColor(colors[colorIndex]);
             transform.DOShakeScale(0.3f, 0.3f, 9, 60);
+            AudioPlayer.Instance.PlayAudio(sw);
         }
         if (Input.GetKeyDown(colorDown))
         {
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour
 
             ChangeColor(colors[colorIndex]);
             transform.DOShakeScale(0.3f, 0.3f, 9, 60);
+            AudioPlayer.Instance.PlayAudio(sw);
         }
     }
     void ChangeColor(Color changeColor)
