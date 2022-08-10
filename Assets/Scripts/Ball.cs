@@ -9,7 +9,7 @@ public class Ball : MonoBehaviour
 
     public Color _currentColor;
     [SerializeField] List<Color> colors;
-    [SerializeField] GameObject explosionParticle;
+    [SerializeField] GameObject explosionParticle, splat;
     [SerializeField] AudioClip hit, crack;
     // Start is called before the first frame update
     void Start()
@@ -39,12 +39,13 @@ public class Ball : MonoBehaviour
         transform.DOPunchScale(new Vector3(0.2f, 0.2f, 0), 0.3f, 9, 0.3f);
         ChangeColor(colors[Random.Range(0, colors.Count)]);
         AudioPlayer.Instance.PlayAudio(hit);
+        Instantiate(splat, transform.position, Quaternion.identity).GetComponent<ParticleSystem>().startColor = _currentColor;
     }
     
     void ChangeColor(Color changeColor)
     {
         _currentColor = changeColor;
-        GetComponent<SpriteRenderer>().color = _currentColor;
+        GetComponent<SpriteRenderer>().DOColor(_currentColor, 0.2f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -53,7 +54,7 @@ public class Ball : MonoBehaviour
         if (other.gameObject.CompareTag("Respawn"))
         {
             Camera.main.DOShakeRotation(0.7f, 10, 10, 60);
-            Instantiate(explosionParticle, transform.position, Quaternion.identity);
+            Instantiate(explosionParticle, transform.position, Quaternion.identity).GetComponent<ParticleSystem>().startColor = _currentColor;
             if (other.gameObject.name == "Wall 1") ScoresRounds.instance.ChangeScore(1);
             else ScoresRounds.instance.ChangeScore(0);
             ScoresRounds.instance.LoadNextScene();

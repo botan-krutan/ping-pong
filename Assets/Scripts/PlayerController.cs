@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
             else colorIndex++;
 
             ChangeColor(colors[colorIndex]);
+            transform.DORewind();
             transform.DOShakeScale(0.3f, 0.3f, 9, 60);
             AudioPlayer.Instance.PlayAudio(sw);
         }
@@ -59,14 +60,16 @@ public class PlayerController : MonoBehaviour
             else colorIndex--;
 
             ChangeColor(colors[colorIndex]);
+            transform.DORewind();
             transform.DOShakeScale(0.3f, 0.3f, 9, 60);
             AudioPlayer.Instance.PlayAudio(sw);
         }
     }
     void ChangeColor(Color changeColor)
-    {
+    {   
+        
         _currentColor = changeColor;
-        GetComponent<SpriteRenderer>().color = _currentColor;
+        GetComponent<SpriteRenderer>().DOColor(_currentColor, 0.2f);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

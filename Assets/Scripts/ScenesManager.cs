@@ -28,4 +28,8 @@ public class ScenesManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(sceneName);
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
